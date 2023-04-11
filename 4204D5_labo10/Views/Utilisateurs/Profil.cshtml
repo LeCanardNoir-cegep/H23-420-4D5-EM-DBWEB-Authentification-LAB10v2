@@ -1,14 +1,15 @@
 ﻿<!-- Model initial pour la migration 1.4 -->
 <!-- █model Utilisateur -->
+@model Utilisateur
 
 <!-- Model alternatif après la migration 1.5. -->
 <!-- █model UtilisateurEtFavorisViewModel -->
 <a asp-action="Index" asp-controller="Musique">Retour à l'index</a>
 
-<h2>Profil de █Model.Utilisateur.Pseudo</h2>
+<h2>Profil de @Model.Pseudo</h2>
 
-<p>Id : █Model.Utilisateur.UtilisateurId</p>
-<p>Nom d'utilisateur : █Model.Utilisateur.Pseudo</p>
+<p>Id : @Model.UtilisateurId</p>
+<p>Nom d'utilisateur : @Model.Pseudo</p>
 
 <!-- ARRÊTEZ ICI POUR LA MIGRATION 1.4 -->
 

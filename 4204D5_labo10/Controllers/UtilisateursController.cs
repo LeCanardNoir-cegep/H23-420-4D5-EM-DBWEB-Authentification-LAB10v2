@@ -26,7 +26,7 @@ namespace _4204D5_labo10.Controllers
             return View();
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Inscription(InscriptionViewModel ivm)
         {
             // Le pseudo est déjà pris ?
@@ -39,7 +39,7 @@ namespace _4204D5_labo10.Controllers
 
             // On INSERT l'utilisateur avec une procédure stockée qui va s'occuper de
             // hacher le mot de passe, chiffrer la couleur ...
-            string query = "EXEC Utilisateurs.USP_CreerUtilisateur @Pseudonyme, @MotDePasse, @Couleur";
+            string query = "EXEC Utilisateurs.USP_CreerUtilisateur @Pseudo, @MotDePasse, @Couleur";
             List<SqlParameter> parameters = new List<SqlParameter>
             {
                 new SqlParameter{ParameterName = "@Pseudo", Value = ivm.Pseudo},
@@ -56,14 +56,14 @@ namespace _4204D5_labo10.Controllers
                 return View(ivm);
             }
             return RedirectToAction("Connexion", "Utilisateurs");
-        }*/
+        }
 
         public IActionResult Connexion()
         {
             return View();
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Connexion(ConnexionViewModel cvm)
         {
             // Procédure stockée qui compare le mot de passe fourni à celui dans la BD
@@ -95,7 +95,7 @@ namespace _4204D5_labo10.Controllers
             await HttpContext.SignInAsync(principal);
 
             return RedirectToAction("Index", "Musique");
-        }*/
+        }
 
         [HttpGet]
         public async Task<IActionResult> Deconnexion()
@@ -105,8 +105,9 @@ namespace _4204D5_labo10.Controllers
             return RedirectToAction("Index", "Musique");
         }
 
-        /*
+
         // JUSTE SI AUTHENTIFIÉ SVP
+        [Authorize]
         public async Task<IActionResult> Profil()
         {
             // Manière habituelle de récupérer un utilisateur
@@ -119,21 +120,21 @@ namespace _4204D5_labo10.Controllers
             }
 
             return View(utilisateur); // Remplacer cette ligne une fois à la version 1.5
-        }*/
+        }
 
-            // FIN alternative à l'action Profil() pour la migration 1.5
-            /*
-            // Récupérer les chanteurs favoris de l'utilisateur pour les afficher dans le profil
-            List<ChanteurFavori> favoris = await _context.ChanteurFavoris.ToListAsync();
-            List<Chanteur> chanteurs = await _context.Chanteurs
-                .Where(x => x.ChanteurFavoris
-                .Any(y => y.UtilisateurId == utilisateur.UtilisateurId)).ToListAsync();
-            return View(new UtilisateurEtFavorisViewModel()
-            {
-                Utilisateur = utilisateur,
-                ChanteursFavoris = chanteurs
-            });
-            */
+        // FIN alternative à l'action Profil() pour la migration 1.5
+        /*
+        // Récupérer les chanteurs favoris de l'utilisateur pour les afficher dans le profil
+        List<ChanteurFavori> favoris = await _context.ChanteurFavoris.ToListAsync();
+        List<Chanteur> chanteurs = await _context.Chanteurs
+            .Where(x => x.ChanteurFavoris
+            .Any(y => y.UtilisateurId == utilisateur.UtilisateurId)).ToListAsync();
+        return View(new UtilisateurEtFavorisViewModel()
+        {
+            Utilisateur = utilisateur,
+            ChanteursFavoris = chanteurs
+        });
+        */
 
         /*[HttpPost]
         [Authorize]

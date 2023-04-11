@@ -78,11 +78,11 @@
 		
 		IF HASHBYTES('SHA2_256', CONCAT(@MotDePasse, @Sel)) = @PassHash
 		BEGIN
-			SELECT 1 AS 'PassValid'; -- TRUE (Valide)
+			SELECT  * FROM Utilisateurs.Utilisateur WHERE @Pseudo = Pseudo; -- 1 AS 'PassValid'; -- TRUE (Valide)
 		END
 		ELSE
 		BEGIN
-			SELECT 0 AS 'PassValid'; -- FALSE (Invalide)
+			SELECT  TOP(0) * FROM Utilisateurs.Utilisateur -- 0 AS 'PassValid'; -- FALSE (Invalide)
 		END
 	
 	END
