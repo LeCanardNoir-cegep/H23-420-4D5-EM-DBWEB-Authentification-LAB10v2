@@ -36,7 +36,7 @@
 	CREATE PROCEDURE Utilisateurs.USP_CreerUtilisateur
 		@Pseudo nvarchar(50),
 		@MotDePasse nvarchar(100),
-		@Couleur char(30)
+		@Couleur nvarchar(30)
 	AS
 	BEGIN
 	
@@ -55,7 +55,7 @@
 		
 		INSERT INTO Utilisateurs.Utilisateur (Pseudo, MotDePasseHache, Sel, CouleurPrefere)
 		VALUES
-		(@Pseudo, @PassHash, @Sel, @Couleur);
+		(@Pseudo, @PassHash, @Sel, @CouleurEncrypt);
 	
 	END
 	GO
