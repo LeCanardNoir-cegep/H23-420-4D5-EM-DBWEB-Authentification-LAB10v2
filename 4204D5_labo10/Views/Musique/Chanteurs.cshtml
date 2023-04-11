@@ -1,0 +1,48 @@
+﻿@model List<ChanteurEtNbChansonsViewModel>
+
+    <a asp-action="Index" asp-controller="Musique">Retour à l'index</a>
+
+    <h2>Chanteurs</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                @Html.DisplayNameFor(model => model.First().Chanteur.Nom)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Chanteur.DateNaissance)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().NbChansons)
+                </th>
+                <!-- À partir de la migation 1.5 -->
+                <!--<th>
+                    Ajouter aux favoris
+                </th>-->
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Chanteur.Nom)
+                        </td>
+                            <td>
+                            @Html.DisplayFor(modelItem => item.Chanteur.DateNaissance)
+                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NbChansons)
+                        </td>
+                        <!-- À partir de la migation 1.5 -->
+                        <!--<td>
+                            <form asp-action="AjouterFavori">
+                                <input hidden type="number" name="chanteurId" value="█(item.Chanteur.ChanteurId)">
+                                <button type="submit">+⭐</button>
+                            </form>
+                        </td>-->
+                    </tr>
+        }
+        </tbody>
+    </table>
