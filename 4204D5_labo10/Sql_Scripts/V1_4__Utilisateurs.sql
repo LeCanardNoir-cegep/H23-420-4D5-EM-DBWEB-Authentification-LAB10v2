@@ -64,22 +64,25 @@
 	
 	CREATE PROCEDURE Utilisateurs.USP_AuthUtilisateur
 		@Pseudo nvarchar(50),
-		@MotDePasse nvarchar(50)
+		@MotDePasse nvarchar(100)
 	AS
 	BEGIN
-		
-		DECLARE @Mdp nvarchar(50);
-		SELECT @Mdp = MotDePasseHache
+		-- HASH PASS
+		DECLARE @Sel varbinary(16);
+		DECLARE @PassHash varbinary(32);
+		-- HASH PASS
+
+		SELECT @Sel = Sel, @PassHash = MotDePasseHache
 		FROM Utilisateurs.Utilisateur
 		WHERE Pseudo = @Pseudo;
 		
-		IF HASHBYTES @MotDePasse = @Mdp
+		IF HASHBYTES('SHA2_256', CONCAT(@MotDePasse, @Sel)) = @PassHash
 		BEGIN
-			SELECT * FROM Utilisateurs.Utilisateur WHERE Pseudo = @Pseudo;
+			SELECT 1 AS 'PassValid'; -- TRUE (Valide)
 		END
 		ELSE
 		BEGIN
-			SELECT TOP 0 * FROM Utilisateurs.Utilisateur;
+			SELECT 0 AS 'PassValid'; -- FALSE (Invalide)
 		END
 	
 	END
