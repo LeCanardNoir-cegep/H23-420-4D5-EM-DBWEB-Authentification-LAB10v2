@@ -4,7 +4,7 @@
 	CREATE TABLE Utilisateurs.Utilisateur(
 		UtilisateurID int IDENTITY(1,1),
 		Pseudo nvarchar(50) NOT NULL,
-		MotDePasseHache nvarchar(50) NOT NULL,
+		MotDePasseHache varbinary(32) NOT NULL,
 		Sel varbinary(16) NOT NULL,
 		CouleurPrefere nvarchar(30) NOT NULL,
 		CONSTRAINT PK_Utilisateur_UtilisateurID PRIMARY KEY (UtilisateurID)
@@ -29,16 +29,20 @@
 	-- Procédure inscription
 	CREATE PROCEDURE Utilisateurs.USP_CreerUtilisateur
 		@Pseudo nvarchar(50),
-		@MotDePasse nvarchar(50),
-		@Couleur nvarchar(30)
+		@MotDePasse nvarchar(100),
+		@Couleur char(30)
 	AS
 	BEGIN
 	
 		DECLARE @Sel varbinary(16) = CRYPT_GEN_RANDOM(16);
+		-- CORRECTION 
+		DECLARE @PassSel nvarchar(116) = CONCAT(@MotDePasse, @Sel);
+		DECLARE @PassHash varbinary(32) = HASHBYTES('SHA2_256', @PassSel);
+		-- FIN CORRECTION
 		
 		INSERT INTO Utilisateurs.Utilisateur (Pseudo, MotDePasseHache, Sel, CouleurPrefere)
 		VALUES
-		(@Pseudo, @MotDePasse, @Sel, @Couleur);
+		(@Pseudo, @PassHash, @Sel, @Couleur);
 	
 	END
 	GO
