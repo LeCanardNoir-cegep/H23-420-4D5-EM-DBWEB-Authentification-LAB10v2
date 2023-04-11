@@ -19,7 +19,7 @@
 	
 	-- Créer une clé maîtresse avec un mot de passe
 	-- ?
-	CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'P4ssw0rd!';
+	CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'P4ssw0rd!1234567890';
 	GO
 	
 	-- Créer un certificat auto-signé
