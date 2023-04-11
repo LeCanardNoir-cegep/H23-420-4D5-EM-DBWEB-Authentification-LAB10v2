@@ -12,11 +12,11 @@ builder.Services.AddDbContext<Lab10Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Lab10"));
 });
 
-/*builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.LoginPath = "/Utilisateurs/Connexion";
     options.LogoutPath = "/Utilisateurs/Deconnexion";
-});*/
+});
 
 var app = builder.Build();
 
@@ -33,7 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.UseAuthentication();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

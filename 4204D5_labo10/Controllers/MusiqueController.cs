@@ -19,10 +19,10 @@ namespace _4204D5_labo10.Controllers
             _context = context;
         }
 
-        public /*async Task<*/IActionResult/*>*/ Index()
+        public async Task<IActionResult> Index()
         {
             // Manière habituelle de récupérer un utilisateur (Migration 1.4)
-            /*ViewData["utilisateur"] = "visiteur";
+            ViewData["utilisateur"] = "visiteur";
             IIdentity? identite = HttpContext.User.Identity;
             if (identite != null && identite.IsAuthenticated)
             {
@@ -33,7 +33,7 @@ namespace _4204D5_labo10.Controllers
                     // Pour dire "Bonjour X" sur l'index
                     ViewData["utilisateur"] = utilisateur.Pseudo;
                 }
-            }*/
+            }
             return View();
         }
 

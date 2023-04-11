@@ -10,6 +10,11 @@ namespace _4204D5_labo10.Models
     [Index("Pseudo", Name = "UC_Utilisateur_Pseudo", IsUnique = true)]
     public partial class Utilisateur
     {
+        public Utilisateur()
+        {
+            ChanteurFavoris = new HashSet<ChanteurFavori>();
+        }
+
         [Key]
         [Column("UtilisateurID")]
         public int UtilisateurId { get; set; }
@@ -20,5 +25,8 @@ namespace _4204D5_labo10.Models
         [MaxLength(16)]
         public byte[] Sel { get; set; } = null!;
         public byte[] CouleurPrefere { get; set; } = null!;
+
+        [InverseProperty("Utilisateur")]
+        public virtual ICollection<ChanteurFavori> ChanteurFavoris { get; set; }
     }
 }
