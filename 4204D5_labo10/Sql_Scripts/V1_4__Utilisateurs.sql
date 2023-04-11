@@ -6,7 +6,7 @@
 		Pseudo nvarchar(50) NOT NULL,
 		MotDePasseHache varbinary(32) NOT NULL,
 		Sel varbinary(16) NOT NULL,
-		CouleurPrefere nvarchar(30) NOT NULL,
+		CouleurPrefere varbinary(max) NOT NULL,
 		CONSTRAINT PK_Utilisateur_UtilisateurID PRIMARY KEY (UtilisateurID)
 	);
 	GO
@@ -19,12 +19,18 @@
 	
 	-- Créer une clé maîtresse avec un mot de passe
 	-- ?
+	CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'P4ssw0rd!';
+	GO
 	
 	-- Créer un certificat auto-signé
 	-- ?
+	CREATE CERTIFICATE MonCertificat WITH SUBJECT = 'ChiffrementCouleur';
+	GO
 	
 	-- Créer une clé symétrique
 	-- ?
+	CREATE SYMMETRIC KEY MaSuperCle WITH ALGORITHM = AES_256 ENCRYPTION BY CERTIFICATE MonCertificat;
+	GO
 	
 	-- Procédure inscription
 	CREATE PROCEDURE Utilisateurs.USP_CreerUtilisateur
