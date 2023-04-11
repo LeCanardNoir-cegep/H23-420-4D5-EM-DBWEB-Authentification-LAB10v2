@@ -119,7 +119,18 @@ namespace _4204D5_labo10.Controllers
                 return RedirectToAction("Connexion", "Utilisateurs");
             }
 
-            return View(utilisateur); // Remplacer cette ligne une fois à la version 1.5
+            //return View(utilisateur); // Remplacer cette ligne une fois à la version 1.5
+
+            // Récupérer les chanteurs favoris de l'utilisateur pour les afficher dans le profil
+            List<ChanteurFavori> favoris = await _context.ChanteurFavoris.ToListAsync();
+            List<Chanteur> chanteurs = await _context.Chanteurs
+                .Where(x => x.ChanteurFavoris
+                .Any(y => y.UtilisateurId == utilisateur.UtilisateurId)).ToListAsync();
+            return View(new UtilisateurEtFavorisViewModel()
+            {
+                Utilisateur = utilisateur,
+                ChanteursFavoris = chanteurs
+            });
         }
 
         // FIN alternative à l'action Profil() pour la migration 1.5
