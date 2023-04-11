@@ -5,6 +5,6 @@
 	@ChanteurID int
 	AS
 	BEGIN
-		-- ?
+		SELECT * FROM Musique.Chanson WHERE ChanteurID = @ChanteurID;
 	END
 	GO

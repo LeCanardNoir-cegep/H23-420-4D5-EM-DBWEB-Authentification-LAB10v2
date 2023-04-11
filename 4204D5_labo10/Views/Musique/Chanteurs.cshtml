@@ -1,4 +1,5 @@
-﻿@model List<ChanteurEtNbChansonsViewModel>
+﻿<!-- Ancien model model List<ChanteurEtNbChansonsViewModel> -->
+@model List<VwChanteurNbChanson>
 
     <a asp-action="Index" asp-controller="Musique">Retour à l'index</a>
 
@@ -8,13 +9,13 @@
         <thead>
             <tr>
                 <th>
-                @Html.DisplayNameFor(model => model.First().Chanteur.Nom)
+                @Html.DisplayNameFor(model => model.First().Nom)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().Chanteur.DateNaissance)
+                    @Html.DisplayNameFor(model => model.First().DateDeNaissance)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().NbChansons)
+                    @Html.DisplayNameFor(model => model.First().NombreDeChansons)
                 </th>
                 <!-- À partir de la migation 1.5 -->
                 <!--<th>
@@ -27,13 +28,13 @@
         {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Chanteur.Nom)
+                            @Html.DisplayFor(modelItem => item.Nom)
                         </td>
                             <td>
-                            @Html.DisplayFor(modelItem => item.Chanteur.DateNaissance)
+                            @Html.DisplayFor(modelItem => item.DateDeNaissance)
                             </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.NbChansons)
+                            @Html.DisplayFor(modelItem => item.NombreDeChansons)
                         </td>
                         <!-- À partir de la migation 1.5 -->
                         <!--<td>

@@ -3,6 +3,7 @@ using _4204D5_labo10.Models;
 using _4204D5_labo10.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -51,18 +52,22 @@ namespace _4204D5_labo10.Controllers
             // À cause du lazy loading, on charge les chansons de la BD :
             List<Chanson> chansons = await _context.Chansons.ToListAsync();
 
+            // Au départ:
             // Ensuite on va chercher les chanteurs ET on compte leur nombre de chansons pour chacun
-            List<ChanteurEtNbChansonsViewModel> cencvm = await _context.Chanteurs
-                .Select(x => new ChanteurEtNbChansonsViewModel() { 
-                    Chanteur = x,
-                    NbChansons = x.Chansons.Count
-                }).ToListAsync();
-            return View(cencvm);
+            //List<ChanteurEtNbChansonsViewModel> cencvm = await _context.Chanteurs
+            //    .Select(x => new ChanteurEtNbChansonsViewModel() { 
+            //        Chanteur = x,
+            //        NbChansons = x.Chansons.Count
+            //    }).ToListAsync();
+
+            // Avec la migration 1.2 et la création de la vue dans la BD
+            // return View(await _context.VwChanteurNbChansons.ToListAsync());
+            return View(await _context.VwChanteurNbChansons.ToListAsync());
         }
 
         public async Task<IActionResult> UnChanteurEtSesChansons(string chanteurRecherche)
         {
-            // Trouver un chanteur par son nom. Pas sensible à la casse
+            //  Trouver un chanteur par son nom. Pas sensible à la casse
             Chanteur? chanteur = await _context.Chanteurs.Where(x => x.Nom.ToUpper() == chanteurRecherche.ToUpper()).FirstOrDefaultAsync();
             if(chanteur == null)
             {
@@ -71,8 +76,20 @@ namespace _4204D5_labo10.Controllers
             }
             // Obtenir la liste des chansons du chanteur (Sera modifié à la migration 1.3)
             // La fouille est basée sur le titre de la chanson au lieu de son id...
-            List<Chanson> chansons = await _context.Chansons.Where(x => x.NomChanteur == chanteur.Nom).ToListAsync();
-            
+            // Au départ: List<Chanson> chansons = await _context.Chansons.Where(x => x.NomChanteur == chanteur.Nom).ToListAsync();
+            // Après la migration 1.0:
+            //  List<Chanson> chansons = await _context.Chansons.Where(x => x.ChanteurId == chanteur.ChanteurId).ToListAsync();
+            // Après la migration 1.3:
+           
+
+            string query = "EXEC Musique.USP_ChanteurChansons @ChanteurID";
+            List<SqlParameter> parameters = new List<SqlParameter>
+            {
+                new SqlParameter{ParameterName = "@ChanteurID", Value = chanteur.ChanteurId}
+            };
+
+            List<Chanson> chansons = await _context.Chansons.FromSqlRaw(query, parameters.ToArray()).ToListAsync();
+
             return View(new ChanteurEtSesChansonsViewModel()
             {
                 Chanteur = chanteur,
