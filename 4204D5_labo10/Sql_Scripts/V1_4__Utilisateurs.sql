@@ -41,10 +41,17 @@
 	BEGIN
 	
 		DECLARE @Sel varbinary(16) = CRYPT_GEN_RANDOM(16);
-		-- CORRECTION 
+		-- CORRECTION HASH PASS
 		DECLARE @PassSel nvarchar(116) = CONCAT(@MotDePasse, @Sel);
 		DECLARE @PassHash varbinary(32) = HASHBYTES('SHA2_256', @PassSel);
-		-- FIN CORRECTION
+		-- FIN CORRECTION HASH PASS
+
+		-- ENCRYPTION COULEUR
+		OPEN SYMMETRIC KEY MaSuperCle DECRYPTION BY CERTIFICATE MonCertificat;
+		DECLARE @CouleurEncrypt varbinary(max) = ENCRYPTBYKEY(KEY_GUID('MaSuperCle'), @Couleur);
+		CLOSE SYMMETRIC KEY MaSuperCle;
+		-- FIN ENCRYPTION COULEUR
+
 		
 		INSERT INTO Utilisateurs.Utilisateur (Pseudo, MotDePasseHache, Sel, CouleurPrefere)
 		VALUES
