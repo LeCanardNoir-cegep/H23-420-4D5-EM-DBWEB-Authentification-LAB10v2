@@ -147,7 +147,7 @@ namespace _4204D5_labo10.Controllers
         });
         */
 
-        /*[HttpPost]
+        [HttpPost]
         [Authorize]
         public async Task<IActionResult> Couleur(string motDePasse)
         {
@@ -168,7 +168,7 @@ namespace _4204D5_labo10.Controllers
                 new SqlParameter{ParameterName = "@MotDePasse", Value = motDePasse}
             };
             Couleur? couleur = (await _context.Couleurs.FromSqlRaw(query, parameters.ToArray()).ToListAsync()).FirstOrDefault();
-            if(couleur != null)
+            if (couleur != null)
             {
                 // On passe la couleur par le ViewData (ou le ViewBag)
                 ViewData["couleur"] = couleur.Couleur1;
@@ -188,6 +188,6 @@ namespace _4204D5_labo10.Controllers
                 Utilisateur = utilisateur,
                 ChanteursFavoris = chanteurs
             });
-        }*/
+        }
     }
 }

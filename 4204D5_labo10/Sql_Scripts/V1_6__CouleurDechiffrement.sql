@@ -36,12 +36,17 @@
 		BEGIN
 			-- ?
 			
+			-- DECRYPTAGE COULEUR
+			OPEN SYMMETRIC KEY MaSuperCle DECRYPTION BY CERTIFICATE MonCertificat;
+
 			-- Select qui imite la table Utilisateurs.Couleur et déchiffre la couleur préférée
-			SELECT 
+			SELECT CONVERT(nvarchar(30), DecryptByKey(UU.CouleurPrefere)) AS 'Couleur'
 			-- ?
-			AS Couleur
-			FROM Utilisateurs.Utilisateur WHERE Pseudo = @Pseudo;
+			FROM Utilisateurs.Utilisateur AS UU
+			WHERE Pseudo = @Pseudo;
 			
+			CLOSE SYMMETRIC KEY MaSuperCle;		
+			-- FIN DECRYPTAGE COULEUR
 			-- ?
 		END
 		ELSE

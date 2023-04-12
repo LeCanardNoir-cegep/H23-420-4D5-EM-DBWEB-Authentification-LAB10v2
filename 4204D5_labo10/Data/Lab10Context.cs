@@ -21,6 +21,7 @@ namespace _4204D5_labo10.Data
         public virtual DbSet<Chanson> Chansons { get; set; } = null!;
         public virtual DbSet<Chanteur> Chanteurs { get; set; } = null!;
         public virtual DbSet<ChanteurFavori> ChanteurFavoris { get; set; } = null!;
+        public virtual DbSet<Couleur> Couleurs { get; set; } = null!;
         public virtual DbSet<Utilisateur> Utilisateurs { get; set; } = null!;
         public virtual DbSet<VwChanteurNbChanson> VwChanteurNbChansons { get; set; } = null!;
 
